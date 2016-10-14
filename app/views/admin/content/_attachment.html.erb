@@ -27,4 +27,13 @@
     <%= link_to_remote "+ #{resource.filename}", :url => { :action => "resource_add", :id => @article.id, :resource_id => resource.id}, :update => 'resources' %><br />
   <% end %>
 </li>
+
+  <!-- TODO -->
+  <% if current_user.admin? %>
+    <h3><%= _("Merge Articles") %></h3>
+    Article ID <%= text_field 'merge', 'with', {:autocomplete => 'off', :style => 'width: 25%'} %>
+    <%= submit_tag "Merge" %>
+  <% end %>
+
 <% end %>
+

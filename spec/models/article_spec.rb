@@ -630,5 +630,28 @@ describe Article do
     end
 
   end
+  
+  describe "#merge_with(other_article_id)" do
+    before do
+      @art1 = Factory(:article)
+      @art2 = Factory(:article)
+      @art3 = Factory(:article)
+    end
+    
+    it "should raise RecordNotFound if id is invalid" do
+      id = @art3.id
+      @art3.destroy
+
+      expect{ @art1.merge_with(id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    
+    it "should return no error if id is valid" do
+      expect{ @art1.merge_with(@art2.id) }.to_not raise_error(ActiveRecord::RecordNotFound)
+    end
+    
+    it "should contain contents from both articles" do
+      # TODO
+    end
+  end
 end
 
