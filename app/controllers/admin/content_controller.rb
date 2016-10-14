@@ -25,17 +25,25 @@ class Admin::ContentController < Admin::BaseController
 
   def new
     if params[:commit] == "Merge"
-      # make sure input is a valid id (i.e. integer) [error msg]
-      # make sure it's not the same as current article id [error msg]
-      # call instance method merge_with (from model) to merge
-      # get new @article then return to edit page [success msg]
-      @merge = true
+      begin
+        @article = Article.find(params[:id]).merge_with(params[:merge_with].to_i)
+          flash[:notice] = "Articles merged successfully"
+          redirect_to :action => 'edit', :id => @article.id
+        return
+      rescue Exception => e
+        puts e
+        redirect_to :action => 'index'
+        flash[:error] = "Merge failed"
+        return
+      end
     end
+    
     new_or_edit
   end
 
   def edit
     @article = Article.find(params[:id])
+
     unless @article.access_by? current_user
       redirect_to :action => 'index'
       flash[:error] = _("Error, you are not allowed to perform this action")
@@ -179,12 +187,8 @@ class Admin::ContentController < Admin::BaseController
         destroy_the_draft unless @article.draft
         set_article_categories
         set_the_flash
-        if @merge
-          flash[:notice] = "Articles merged successfully"
-          redirect_to :action => 'edit', :id => @article.id
-        else
-          redirect_to :action => 'index'
-        end
+        
+        redirect_to :action => 'index'
         return
       end
     end

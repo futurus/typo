@@ -48,22 +48,20 @@ Given /^the blog is set up$/ do
                 :profile_id => 2,
                 :name => 'user',
                 :state => 'active'})
-  Article.create(:allow_comments => true, 
-                 :allow_pings => true, 
-                 :author => "admin", 
-                 :body => "Muspi Merol", 
-                 :guid => "1bf3e2ca-ed7b-4562-8a4a-8ce8438822c8", 
-                 :id => 10, 
-                 :permalink => "foobar2nd", 
-                 :post_type => "read", 
-                 :published => true, 
-                 :published_at => "2016-10-14 18:00:00 UTC", 
-                 :settings => {"password"=>""}, 
-                 :state => "published", 
-                 :text_filter_id => 5, 
-                 :title => "Foobar2nd", 
-                 :type => "Article", 
-                 :user_id => 1)
+  Article.create!(:allow_comments => true, 
+                  :allow_pings => true, 
+                  :author => "admin", 
+                  :body => "Muspi Merol", 
+                  :permalink => "foobar2nd", 
+                  :post_type => "read", 
+                  :published => true, 
+                  :published_at => "2016-10-14 18:00:00 UTC", 
+                  :settings => {"password"=>""}, 
+                  :state => "published", 
+                  :text_filter_id => 5, 
+                  :title => "Foobar2nd", 
+                  :type => "Article", 
+                  :user_id => 1)
 end
 
 And /^I am logged into the admin panel$/ do

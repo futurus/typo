@@ -417,11 +417,24 @@ class Article < Content
   end
 
   def merge_with(other_article_id)
-    article = Article.find_by_id(other_article_id)
+    raise ArgumentError, 'Argument is not numeric' unless other_article_id.is_a? Numeric  
     
+    article = Article.find_by_id(other_article_id)
+
     raise ActiveRecord::RecordNotFound if article.nil?
     
-    # merge and return
+    if self.id != article.id
+      article.comments.each { |c|
+        self.comments << Comment.new(:author => c.author,
+                                     :body => c.body) 
+      }
+      save!
+      self.update_attribute(:body, self.body + " " + article.body)
+      article.destroy
+      return self
+    else
+      raise ArgumentError, 'Cannot merge same article'
+    end
   end
 
 

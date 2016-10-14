@@ -649,8 +649,29 @@ describe Article do
       expect{ @art1.merge_with(@art2.id) }.to_not raise_error(ActiveRecord::RecordNotFound)
     end
     
+    it "should contain the same author as article1's" do
+      @merged_article = @art1.merge_with(@art2.id)
+    
+      assert_equal @merged_article.author, @art1.author
+    end
+    
+    it "should contain the same title as article1's" do
+      @merged_article = @art1.merge_with(@art2.id)
+    
+      assert_equal @merged_article.title, @art1.title
+    end
+    
     it "should contain contents from both articles" do
-      # TODO
+      expected_body = @art1.body + " " + @art2.body
+      @merged_article = @art1.merge_with(@art2.id)
+    
+      assert_equal @merged_article.body, expected_body
+    end
+    
+    it "should contain comments from both articles" do
+      @merged_article = @art1.merge_with(@art2.id)
+      
+      assert_equal @merged_article.comments.size, @art1.comments.size + @art2.comments.size
     end
   end
 end
