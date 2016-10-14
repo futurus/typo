@@ -31,8 +31,8 @@
   <!-- TODO -->
   <% if current_user.admin? %>
     <h3><%= _("Merge Articles") %></h3>
-    Article ID <%= text_field 'merge', 'with', {:autocomplete => 'off', :style => 'width: 25%'} %>
-    <%= submit_tag "Merge" %>
+    Article ID <%= text_field_tag 'merge_with', '', size: 125 %>
+    <%= submit_tag "Merge", class: "btn info" %>
   <% end %>
 
 <% end %>

@@ -24,6 +24,13 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
+    if params[:commit] == "Merge"
+      # make sure input is a valid id (i.e. integer) [error msg]
+      # make sure it's not the same as current article id [error msg]
+      # call instance method merge_with (from model) to merge
+      # get new @article then return to edit page [success msg]
+      @merge = true
+    end
     new_or_edit
   end
 
@@ -140,7 +147,6 @@ class Admin::ContentController < Admin::BaseController
   def real_action_for(action); { 'add' => :<<, 'remove' => :delete}[action]; end
 
   def new_or_edit
-    p params
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
@@ -173,7 +179,12 @@ class Admin::ContentController < Admin::BaseController
         destroy_the_draft unless @article.draft
         set_article_categories
         set_the_flash
-        redirect_to :action => 'index'
+        if @merge
+          flash[:notice] = "Articles merged successfully"
+          redirect_to :action => 'edit', :id => @article.id
+        else
+          redirect_to :action => 'index'
+        end
         return
       end
     end
