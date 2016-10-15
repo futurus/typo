@@ -24,18 +24,17 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
-    if params[:commit] == "Merge"
+    if ! params[:merge_with].nil?
       begin
         @article = Article.find(params[:id]).merge_with(params[:merge_with].to_i)
-          flash[:notice] = "Articles merged successfully"
-          redirect_to :action => 'edit', :id => @article.id
+        flash[:notice] = "Articles merged successfully"
+        #redirect_to :action => 'edit', :id => @article.id
         return
-      rescue Exception => e
-        puts e
-        redirect_to :action => 'index'
+      rescue Exception
         flash[:error] = "Merge failed"
         return
       end
+      redirect_to :action => 'index'
     end
     
     new_or_edit
