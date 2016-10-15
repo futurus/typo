@@ -29,12 +29,12 @@ class Admin::ContentController < Admin::BaseController
         @article = Article.find(params[:id]).merge_with(params[:merge_with].to_i)
         flash[:notice] = "Articles merged successfully"
         #redirect_to :action => 'edit', :id => @article.id
-        return
       rescue Exception
         flash[:error] = "Merge failed"
-        return
       end
+      
       redirect_to :action => 'index'
+      return
     end
     
     new_or_edit
