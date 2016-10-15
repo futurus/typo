@@ -24,7 +24,7 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
-    if ! params[:merge_with].nil?
+    if ! params[:merge_with].nil? and current_user.admin?
       begin
         @article = Article.find(params[:id]).merge_with(params[:merge_with].to_i)
         flash[:notice] = "Articles merged successfully"
