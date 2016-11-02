@@ -1,0 +1,3 @@
+It's challenging but great to be doing BDD/TDD on legacy code. I enjoy reverse engineering, fixing bugs, and adding functionality to the Typo blog.
+
+I have done pair programming for 169.1x, in fact on all assignments. It's a little more difficult looking for partner this time around. However, I will be looking forward to pairing up in the next (bigger/more difficult) assignments.
